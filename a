@@ -1,0 +1,109 @@
+# Authors: Trung Le, Wenjing Rao
+# MIPS instruction encoding format:
+# R-type: 6(op) + 5(rs) + 5(rt) + 5(rd) + 5(shamt) + 6(funct)
+# I-type: 6(op) + 5(rs) + 5(rt) + 16(imm)
+#-----------------------------------------------------------
+
+print("ECE366 Fall 2018 mini MIPS assembler, supporting:")
+print("addi(I-type)")
+print("add(R-type)")
+print("sub(R-type)")
+print("slt(R-type)")
+print("--------")
+
+input_file = open("MIPS_asm.txt", "r")
+output_file = open("MIPS_machine_code.txt","w")
+
+for line in input_file:
+    if (line == "\n"):              # empty lines ignored
+        continue
+
+    line = line.replace("\n","")    # remove 'endline' character
+    print("Instr: ", line)          # show the asm instruction to screen
+    line = line.replace(" ","")     # remove spaces anywhere in line
+
+
+
+    if(line[0:4] == 'addi'):                # addi: I-type
+        line = line.replace("$","")         # remove $'s anywhere
+        line = line.replace("addi","")      # "addi $23, $25, 100" will be split
+        line = line.split(',')              # into three strings: "23" "25" "100"
+
+	# now, line[0]="23", line[1] = "25", line[2] = "100"
+        if(line[2][0] == '-'):              # in case imm is negative...
+            line[2] = line[2].replace("-","")
+            line[2] = 0b1111111111111111 - int(line[2]) + 1
+                                            # 2's complement conversion
+        op = "001000"
+        rs = format(int(line[1]), "05b")    # make rs into 5-bit binary format
+        rt = format(int(line[0]), "05b")    # make rt 5-bit binary format
+        imm = format(int(line[2]), "016b")  # make imm into 16-bit binary format
+
+	# update screen and output file
+        print(op + " " + rs + " " + rt + " " + imm + "\n")
+        output_file.write(op + rs + rt + imm + "\n")
+
+
+
+    elif(line[0:3] == 'add'):               # add: R-type
+        op = "000000"
+        shamt = "00000"
+        funct = "100000"
+
+        line = line.replace("$","")         # remove $'s anywhere
+        line = line.replace("add","")
+        line = line.split(',')
+
+        rs = format(int(line[1]), "05b")    # 5-bit binary for rs
+        rt = format(int(line[2]), "05b")    # 5-bit binary for rt
+        rd = format(int(line[0]), "05b")    # 5-bit binary for rd
+
+	# update screen and output file
+        print(op + " " + rs + " " + rt + " " + rd + " " + shamt + " " + funct + "\n")
+        output_file.write(op + rs + rt + rd + shamt + funct + "\n")
+
+
+
+    elif(line[0:3] == 'sub'):		    # sub: R-type
+        op = "000000"
+        shamt = "00000"
+        funct = "100010"
+
+        line = line.replace("$","")
+        line = line.replace("sub","")
+        line = line.split(',')
+
+        rs = format(int(line[1]), "05b")
+        rt = format(int(line[2]), "05b")
+        rd = format(int(line[0]), "05b")
+
+	# update screen and output file
+        print(op + " " + rs + " " + rt + " " + rd + " " + shamt + " " + funct + "\n")
+        output_file.write(op + rs + rt + rd + shamt + funct + "\n")
+
+
+
+    elif(line[0:3] == "slt"):               # slt: R-type
+        op = "000000"
+        shamt = "00000"
+        funct = "101010"
+
+        line = line.replace("$","")
+        line = line.replace("slt","")
+        line = line.split(',')
+
+        rs = format(int(line[1]), "05b")
+        rt = format(int(line[2]), "05b")
+        rd = format(int(line[0]), "05b")
+
+	# update screen and output file
+        print(op + " " + rs + " " + rt + " " + rd + " " + shamt + " " + funct + "\n")
+        output_file.write(op + rs + rt + rd + shamt + funct + "\n")
+
+
+
+    else:
+        print("Unknown instruction:"+line)
+
+input_file.close()
+output_file.close()
