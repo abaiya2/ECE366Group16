@@ -61,7 +61,7 @@
     </tr>
     <tr>
       <td>BEZR2</td>
-      <td>Content Cell</td>
+      <td>BEZR2 10</td>
       <td>1 0 0 m m m m</td>
       <td>f R2 = 0, PC += imm</td>
       <td>Imm = [4, 19]</td>
