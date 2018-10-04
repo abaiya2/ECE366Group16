@@ -71,7 +71,7 @@
       <td>BEZR3 12</td>
       <td>0 1 1 m m m m</td>
       <td>If R3 = 0, PC += imm</td>
-      <td>Imm = {4, 19}</td>
+      <td>Imm = {0, 15}</td>
     </tr>
     <tr>
       <td>EQL</td>
