@@ -57,7 +57,7 @@
       <td>JMPN -3</td>
       <td>1 0 1 m m m m</td>
       <td>PC += imm</td>
-      <td>Imm = {-8, 7}</td>
+      <td>Imm = {-8:-1, 20, 1:6}</td>
     </tr>
     <tr>
       <td>BEZR2</td>
@@ -75,10 +75,10 @@
     </tr>
     <tr>
       <td>EQL</td>
-      <td></td>
+      <td>EQL R0, R7</td>
       <td>0 1 0 1 X X Y</td>
       <td>If RX == RY, R3 = 1</td>
-      <td></td>
+      <td>RX={R0:R3} RY={R6,R7}</td>
     </tr>
     <tr>
       <td>ADD1</td>
