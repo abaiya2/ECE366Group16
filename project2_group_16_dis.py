@@ -34,22 +34,22 @@ def convert_bin_to_asm(input_file, output_file):
             ry = line[5:7]
 
             if line[3:5]=='00':
-                c = "R0"
+                c = "0"
             elif line[3:5]== '01':
-                c="R3"
+                c="3"
             elif line[3:5]== '10':
-                c="R6"
+                c="6"
             else:
-                c = "$R7"
+                c = "7"
 
             if line[5:7] == '00':
-                d = "R0"
+                d = "0"
             elif line[5:7] == '01':
-                d = "R3"
+                d = "3"
             elif line[5:7] == '10':
-                d = "R6"
+                d = "6"
             else:
-                d = "R7"
+                d = "7"
             a = "ADD"
             output_file.write(str(a) + " " + '$' + str(c) + "," + " " + '$' + str(d) + "\n")
 
@@ -59,18 +59,18 @@ def convert_bin_to_asm(input_file, output_file):
             ry = line[6:7]
 
             if line[4:6]=='00':
-                c = "R0"
+                c = "0"
             elif line[4:5]== '01':
-                c="R3"
+                c="3"
             elif line[4:6]== '10':
-                c="R6"
+                c="6"
             else:
-                c = "R7"
+                c = "7"
 
             if line[6:7] == '0':
-                d = "R3"
+                d = "3"
             else:
-                d = "R7"
+                d = "7"
             a = "SUB"
             output_file.write(str(a) + " " + '$' + str(c) + "," + " " + '$' + str(d) + "\n")
 
@@ -80,17 +80,177 @@ def convert_bin_to_asm(input_file, output_file):
             ry = line[5:6]
             rz = line[6:7]
             if line[3:5]=='00':
-                c = "R4"
+                c = "4"
             else:
-                c="R7"
+                c="7"
 
             if line[5:6] == '0':
-                d = "R2"
+                d = "2"
             else:
-                d = "R3"
-            a = "SLT"
-            output_file.write(str(a) + " " + '$' + str(c) + "," + " " + '$' + str(d) + "\n")
+                d = "3"
 
+            if line[6:7]=='0':
+                e = "3"
+            else:
+                e = "4"
+            a = "SLT"
+            output_file.write(str(a) + " "+ '$' + str(e) + "," + " " + '$' + str(c) + "," + " " + '$' + str(d) + "\n")
+
+        if line[0:3] == '101':  #JMPN instruction
+            op = line[0:3]
+            imm = line[3:7]
+            if line[3:7]=='0000':
+                c = "-8"
+            elif line[3:7] == '0001':
+                c="-7"
+            elif line[3:7] == '0010':
+                c="-6"
+            elif line[3:7] == '0011':
+                c = "-5"
+            elif line[3:7] == '0100':
+                c = "-4"
+            elif line[3:7] == '0101':
+                c = "-3"
+            elif line[3:7] == '0110':
+                c = "-2"
+            elif line[3:7] == '0111':
+                c = "-1"
+            elif line[3:7] == '1000':
+                c = "1"
+            elif line[3:7] == '1001':
+                c = "2"
+            elif line[3:7] == '1010':
+                c = "3"
+            elif line[3:7] == '1011':
+                c = "4"
+            elif line[3:7] == '1100':
+                c = "5"
+            elif line[3:7] == '1101':
+                c = "6"
+            else:
+                c = "20"
+
+            a = "JMPN"
+            output_file.write(str(a) + " " + str(c) + "\n")
+        if line[0:3] == '100':  # BEZR2 instruction
+            op = line[0:3]
+            imm = line[3:7]
+            if line[3:7] == '0000':
+                c = "4"
+            elif line[3:7] == '0001':
+                c = "5"
+            elif line[3:7] == '0010':
+                c = "6"
+            elif line[3:7] == '0011':
+                c = "7"
+            elif line[3:7] == '0100':
+                c = "8"
+            elif line[3:7] == '0101':
+                c = "9"
+            elif line[3:7] == '0110':
+                c = "10"
+            elif line[3:7] == '0111':
+                c = "11"
+            elif line[3:7] == '1000':
+                c = "12"
+            elif line[3:7] == '1001':
+                c = "13"
+            elif line[3:7] == '1010':
+                c = "14"
+            elif line[3:7] == '1011':
+                c = "15"
+            elif line[3:7] == '1100':
+                c = "16"
+            elif line[3:7] == '1101':
+                c = "17"
+            elif line[3:7] == '1110':
+                c = "18"
+            else:
+                c = "19"
+
+            a = "BEZR2"
+            output_file.write(str(a) + " " + str(c) + "\n")
+
+
+        if line[0:3] == '011':  #BEZR3 instruction
+            op = line[0:3]
+            imm = line[3:7]
+            a = "BEZR3"
+            d = int(imm, 2)
+            output_file.write(
+            str(a) + " "+ str(d) + "\n")
+
+            #ask amaan about equal instruction
+
+        if line[0:4] == '0100':  # ADD1 instruction
+            op = line[0:4]
+            rx = line[4:7]
+            a = "ADD1"
+            d = int(rx, 2)
+            output_file.write(
+                str(a) + " " + "$" + str(d) + "\n")
+
+        if line[0:5] == '00011':  # STORE instruction
+            op = line[0:5]
+            imm = line[5:7]
+            if line[5:7] == '00':
+                c = "2"
+            elif line[5:7] == '01':
+                c = "3"
+            elif line[5:7] == '10':
+                c = "4"
+            else:
+                c = "5"
+            a = "STR"
+            output_file.write(str(a) + " " + str(c) + "\n")
+
+        if line[0:7] == '0001010':  # SLR_R3 instruction
+            op = line[0:7]
+            a = "SRL_R3"
+            output_file.write(
+                str(a) + "\n")
+
+        if line[0:7] == '0001001':  # SLT108 instruction
+            op = line[0:7]
+            a = "SLT108"
+            output_file.write(
+                str(a) + "\n")
+
+        if line[0:7] == '0001000':  # SLT108 instruction
+            op = line[0:7]
+            a = "SLT16"
+            output_file.write(
+                str(a) + "\n")
+
+        if line[0:7] == '0000111':  # SLT108 instruction
+            op = line[0:7]
+            a = "STR_R1"
+            output_file.write(
+                str(a) + "\n")
+
+        if line[0:7] == '0000110':  # SLT108 instruction
+            op = line[0:7]
+            a = "SRL"
+            output_file.write(
+                str(a) + "\n")
+
+        if line[0:7] == '0000010':  # LD_R0 instruction
+            op = line[0:7]
+            a = "LD_R0"
+            output_file.write(
+                str(a) + "\n")
+
+        if line[0:7] == '0000001':  # XOR instruction
+            op = line[0:7]
+            a = "XOR"
+            output_file.write(
+                str(a) + "\n")
+
+        if line[0:7] == '0000000':  # AND1 instruction
+            op = line[0:7]
+            a = "AND1"
+            output_file.write(
+                str(a) + "\n")
 
 
 

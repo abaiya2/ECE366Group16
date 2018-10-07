@@ -1,30 +1,49 @@
-SLT $R4, $R2
-SLT $R4, $R2
-SLT $R4, $R2
-SLT $R4, $R2
-SLT $R4, $R2
-SLT $R4, $R2
-SLT $R4, $R2
-SLT $R4, $R2
-ADD $$R7, $R6
-SLT $R7, $R3
-SLT $R4, $R2
-SLT $R4, $R3
+SLT $3, $4, $2
+SLT $3, $4, $2
+SLT $3, $4, $2
+BEZR2 5
+SLT $3, $4, $2
+SLT $3, $4, $2
+SLT $3, $4, $2
+SLT $3, $4, $2
+SLT $3, $4, $2
+ADD $7, $6
+SLT $4, $7, $3
+BEZR2 5
+BEZR2 4
+BEZR2 8
+JMPN 4
+AND1
+JMPN 2
+SLT $4, $4, $2
+SLT $3, $4, $3
 CLR $4
-ADD $R3, $R3
-SLT $R7, $R2
-SLT $R4, $R2
-ADD $R3, $R0
-SLT $R4, $R2
-SLT $R4, $R2
-SLT $R4, $R2
-SLT $R4, $R2
-SLT $R4, $R2
-SLT $R4, $R2
-SLT $R4, $R2
-SLT $R4, $R2
-ADD $R3, $R7
-SUB $R0, $R7
-SLT $R4, $R2
+ADD $3, $3
+BEZR2 7
+BEZR2 18
+SLT $4, $7, $2
+BEZR3 7
+BEZR3 14
+SLT $3, $4, $2
+ADD $3, $0
+BEZR2 11
+BEZR3 4
+SLT $3, $4, $2
+SLT $3, $4, $2
+SLT $3, $4, $2
+SLT $3, $4, $2
+SLT $3, $4, $2
+SLT $3, $4, $2
+SLT $3, $4, $2
+SLT $3, $4, $2
+ADD $3, $7
+SUB $0, $7
+BEZR2 5
+JMPN -4
+JMPN 2
+JMPN -5
+SLT $3, $4, $2
 CLR $3
-ADD $R3, $R0
+ADD $3, $0
+BEZR3 9
+STR_R1
