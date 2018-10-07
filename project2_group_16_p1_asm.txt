@@ -1,2 +1,4 @@
-ADD
-SUB
+SUB $R7, $R3
+CLR $7
+ADD $R6, $R7
+SLT $R7, $R2

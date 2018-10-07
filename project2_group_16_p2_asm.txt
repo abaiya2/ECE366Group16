@@ -1,1 +1,30 @@
-ADD
+SLT $R4, $R2
+SLT $R4, $R2
+SLT $R4, $R2
+SLT $R4, $R2
+SLT $R4, $R2
+SLT $R4, $R2
+SLT $R4, $R2
+SLT $R4, $R2
+ADD $$R7, $R6
+SLT $R7, $R3
+SLT $R4, $R2
+SLT $R4, $R3
+CLR $4
+ADD $R3, $R3
+SLT $R7, $R2
+SLT $R4, $R2
+ADD $R3, $R0
+SLT $R4, $R2
+SLT $R4, $R2
+SLT $R4, $R2
+SLT $R4, $R2
+SLT $R4, $R2
+SLT $R4, $R2
+SLT $R4, $R2
+SLT $R4, $R2
+ADD $R3, $R7
+SUB $R0, $R7
+SLT $R4, $R2
+CLR $3
+ADD $R3, $R0
