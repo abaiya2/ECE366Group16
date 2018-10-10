@@ -1,11 +1,12 @@
-SUB $7, $3
+SUB
 CLR $7
+ADD1 $3
 ADD $6, $7
-SLT $3, $7, $2
+SLT $6, $2, $3
 JMPN -8
 BEZR2 10
 BEZR3 12
-ADD1 $7
+SLT $6, $2, $5
 STR 2
 SRL_R3
 SLT108
@@ -14,3 +15,8 @@ SRL
 LD_R0
 XOR
 AND1
+EQL $2, $6
+CLR $6
+ADD1 $2
+LD 1
+JR
