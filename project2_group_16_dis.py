@@ -126,16 +126,7 @@ def convert_bin_to_asm(input_file, output_file):
             #FUNCTIONALITY:PC += imm        EXAMPLE OUTPUT: JMPN -13
             #RANGE OF Imm {-13,-10, -7, -4, -3, 2, 3, 4}
             #000=-13 001=-10 010=-7 011=-4 100=-3 101=2 110=3 111=4
-        if line[0:3] == '011':  #BEZR3 instruction
-            op = line[0:3]
-            imm = line[3:7]
-            parity = line[7:8]
-            a = "BEZR3"
-            d = int(imm, 2)
-            output_file.write(
-            str(a) + " "+ str(d) + "\n")
 
-            #ask amaan about equal instruction
         if line[0:5] == '01010':  # Equal instruction
             op = line[0:5]
             rx = line[5:6]

@@ -1,33 +1,45 @@
-SUB
-ADD1 $6
-ADD $6, $7
-SLT $6, $2, $3
-JMPN -13
-BEZ $3, 14
-BEZR3 12
-BEZU $7, 2
-SLT $6, $2, $5
-SUB1 $4
-SRL_R3
-SLT108
-STR_R4
-SRL
-LD_R0
-XOR
-AND1
-LD $4, 0
-MOV $7, $2
-JR
-SUB1 $4
-MOV $1, $6
-BEZR3 4
-BEZU $3, 2
-BEZ $1, 5
-JMPN -13
+ADD1 $0
+STR $0, 2
+ADD1 $0
+ADD1 $0
+ADD $0, $0
 MOV $6, $0
 JAL -6
-EQL $0, $6
+LD $5, 0
 LD $4, 1
-STR $6, 4
-CLR $6
-ADD1 $1
+BEZ $5, 25
+AND1
+BEZ $3, 5
+MOV $1, $2
+MOV $7, $6
+MOV $6, $7
+JAL 9
+MOV $2, $0
+MOV $1, $6
+MOV $7, $6
+MOV $6, $2
+JAL 5
+MOV $6, $0
+JAL -6
+MOV $6, $7
+JAL 9
+SRL
+JMPN -13
+CLR $0
+BEZ $1, 14
+BEZ $7, 13
+ADD $0, $3
+SUB1 $7
+JMPN 4
+SLT $6, $4, $3
+BEZU $3, 2
+JR
+SUB
+JMPN 4
+MOV $6, $2
+JAL 5
+MOV $6, $0
+JAL -6
+STR $6, 2
+JMPN 4
+JR
