@@ -8,7 +8,6 @@ ADD1 $1
 ADD1 $1
 ADD1 $1
 MOV $6, $0
-JAL -6
 SLT108
 BEZU $2, 10
 LD_R0
@@ -19,9 +18,8 @@ SLT $7, $2, $3
 BEZU $3, 2
 MOV $7, $2
 ADD1 $1
-JMPN 4
+JMPN -10
 MOV $6, $7
-JAL 9
 STR $6, 4
 CLR $1
 ADD1 $1
@@ -40,5 +38,5 @@ EQL $0, $7
 BEZU $3, 2
 ADD1 $6
 ADD1 $1
-JMPN 4
+JMPN -7
 STR $6, 5

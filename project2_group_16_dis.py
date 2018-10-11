@@ -10,7 +10,6 @@ p2_input_file = open("project2_group_16_p2_bin.txt", "r")
 p2_output_file = open("project2_group_16_p2_asm.txt", "w")
 
 
-
 def convert_bin_to_asm(input_file, output_file):
 
     for line in input_file:
@@ -38,31 +37,21 @@ def convert_bin_to_asm(input_file, output_file):
             #FUNCTIONALITY: RX=0         EXAMPLE OUTPUT: CLR R6
             #RANGE FOR RX {$0, $1, $6, $7}  00= $0 01=$1 10=$6 11=$7
 
-        if line[0:3] == '111':  # add instruction
-            op = line[0:3]
-            rx = line[3:5]
-            ry = line[5:7]
+        if line[0:5] == '11100':  # JAL instruction
+            imm = line[5:7]
             parity = line[7:8]
-
-            if line[3:5]=='00':
-                c = "0"
-            elif line[3:5]== '01':
-                c="3"
-            elif line[3:5]== '10':
-                c="6"
+            imm_str = ""
+            if line[5:7]=='00':
+                imm_str = "-6"
+            elif line[5:7]== '01':
+                imm_str = "5"
+            elif line[5:7]== '10':
+                imm_str = "8"
             else:
-                c = "7"
+                imm_str = "9"
 
-            if line[5:7] == '00':
-                d = "0"
-            elif line[5:7] == '01':
-                d = "3"
-            elif line[5:7] == '10':
-                d = "6"
-            else:
-                d = "7"
-            a = "ADD"
-            output_file.write(str(a) + " " + '$' + str(c) + "," + " " + '$' + str(d) + "\n")
+            a = "JAL"
+            output_file.write(a + " " + imm_str + "\n")
             #FUNCTIONALITY: RX= RX+RY  EXAMPLE OUTPUT: ADD R0, R1
             #RANGE OF RX AND RY {$0,$3,$6,$7} 00=$0 01=$3 10=$6 11=$7
         if line[0:7] == '0001011':  # SUB instruction
@@ -73,6 +62,21 @@ def convert_bin_to_asm(input_file, output_file):
                 str(a) + "\n")
             #FUNCTIONALITY: R6 = R6 - R4   EXAMPLE OF OUTPUT: SUB
 
+        if line[0:7] == '0001100':  # SUB1 instruction
+            op = line[0:7]
+            parity = line[7:8]
+            a = "SUB1"
+            output_file.write(
+                str(a) + "\n")
+            #FUNCTIONALITY: R6 = R6 - R4   EXAMPLE OF OUTPUT: SUB1
+
+        if line[0:7] == '0001101':  # ADD_R0 instruction
+            op = line[0:7]
+            parity = line[7:8]
+            a = "ADD_R0"
+            output_file.write(
+                str(a) + "\n")
+            #FUNCTIONALITY: R6 = R6 - R4   EXAMPLE OF OUTPUT: ADD_R0
 
         if line[0:4] == '0100':  # SLT instruction
             op = line[0:4]
@@ -107,17 +111,17 @@ def convert_bin_to_asm(input_file, output_file):
             parity = line[7:8]
             if line[4:7]=='000':
                 c = "-13"
-            elif line[3:7] == '001':
+            elif line[4:7] == '001':
                 c="-10"
-            elif line[3:7] == '010':
+            elif line[4:7] == '010':
                 c="-7"
-            elif line[3:7] == '011':
+            elif line[4:7] == '011':
                 c = "-4"
-            elif line[3:7] == '100':
+            elif line[4:7] == '100':
                 c = "-3"
-            elif line[3:7] == '101':
+            elif line[4:7] == '101':
                 c = "2"
-            elif line[3:7] == '110':
+            elif line[4:7] == '110':
                 c = "3"
             else:
                 c = "4"
@@ -277,24 +281,6 @@ def convert_bin_to_asm(input_file, output_file):
 
             #FUNCTIONALITY: PC = $RA    EXAMPLE OF OUTPUT: JR
 
-
-        if line[0:5] == '00011':  # SUB1 instruction
-            op = line[0:5]
-            imm = line[5:7]
-            parity = line[7:8]
-            if line[5:7] == '00':
-                c = "4"
-            elif line[5:7] == '01':
-                c = "5"
-            elif line[5:7] == '10':
-                c = "6"
-            else:
-                c = "7"
-            a = "SUB1"
-            output_file.write(str(a) + " " + "$"+ str(c) + "\n")
-            #FUNCTIONALITY: RX = RX - 1    EXAMPLE OF OUTPUT: SUB1 $7
-            #RANGE FOR RX FROM $4-$7  00=$4 01=$5 10=$6 11=$7
-
         if line[0:3] == '001':  #MOV instruction
             op = line[0:3]
             RX = line[3:5]
@@ -377,30 +363,6 @@ def convert_bin_to_asm(input_file, output_file):
            #FUNCTIONALITY: If RX = 0, PC += imm    EXAMPLE OF OUTPUT: BEZ R2, 10
            #RANGE FOR RX {$1,$3,$5,$7} 00=$1 01=$3 10=$5 11=$5
            #RANGE FOR Imm {5,13,14,25} 00=5 01=13 10=14 11=25
-        if line[0:5] == '00110':  # JAL instruction
-           op = line[0:5]
-           imm= line[5:7]
-           parity = line[7:8]
-           if line[5:7] == '00':
-               c = "-6"
-           elif line[5:7] == '01':
-               c = "5"
-           elif line[5:7] == '10':
-               c = "8"
-           else:
-               c = "9"
-           a = "JAL"
-           output_file.write(str(a) + " " + str(c) + "\n")
-           #FUNCTIONALITY:$ra = PC     EXAMPLE OF OUTPUT: JAL 10
-           #              PC += imm
-           #RANGE OF Imm {-6,5,8,9}
-           # 00=-6 01=5 10=8 11=9
-
-
-
-
-
-
 
 
 convert_bin_to_asm(p1_input_file, p1_output_file)
