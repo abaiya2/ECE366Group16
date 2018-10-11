@@ -32,6 +32,7 @@ def convert_bin_to_asm(input_file, output_file):
             else:
                 d='7'
             parity = line[7:8]
+            output_file.write(      "# $" + d + " = 0 \n")
             output_file.write(
             str(a) + " " + '$' + str(d) + "\n")
             #FUNCTIONALITY: RX=0         EXAMPLE OUTPUT: CLR R6
@@ -51,6 +52,7 @@ def convert_bin_to_asm(input_file, output_file):
                 imm_str = "9"
 
             a = "JAL"
+            output_file.write(      "$RA = PC, " + "PC  += " + imm_str)
             output_file.write(a + " " + imm_str + "\n")
             #FUNCTIONALITY: RX= RX+RY  EXAMPLE OUTPUT: ADD R0, R1
             #RANGE OF RX AND RY {$0,$3,$6,$7} 00=$0 01=$3 10=$6 11=$7
@@ -58,6 +60,7 @@ def convert_bin_to_asm(input_file, output_file):
             op = line[0:7]
             parity = line[7:8]
             a = "SUB"
+            output_file.write("     # R6 = R6 - R4 \n")
             output_file.write(                         
                 str(a) + "\n")
             #FUNCTIONALITY: R6 = R6 - R4   EXAMPLE OF OUTPUT: SUB
@@ -66,6 +69,7 @@ def convert_bin_to_asm(input_file, output_file):
             op = line[0:7]
             parity = line[7:8]
             a = "SUB1"
+            output_file.write("     # R7 = R7 - 1 \n")
             output_file.write(
                 str(a) + "\n")
             #FUNCTIONALITY: R6 = R6 - R4   EXAMPLE OF OUTPUT: SUB1
@@ -74,6 +78,7 @@ def convert_bin_to_asm(input_file, output_file):
             op = line[0:7]
             parity = line[7:8]
             a = "ADD_R0"
+            output_file.write("     # R0 = R0 + R1 \n")
             output_file.write(
                 str(a) + "\n")
             #FUNCTIONALITY: R6 = R6 - R4   EXAMPLE OF OUTPUT: ADD_R0
@@ -99,6 +104,7 @@ def convert_bin_to_asm(input_file, output_file):
             else:
                 e = "5"
             a = "SLT"
+            output_file.write(      "# If $" + c + " < $" + d + ", $" + e + " = 1 \n")
             output_file.write(str(a) + " "+ '$' + str(c) + "," + " " + '$' + str(d) + "," + " " + '$' + str(e) + "\n")
          #FUNCTIONALITY: If X < Y, SET Z TO 1    EXAMPLE OF OUTPUT: SLT RX, RY, RZ
          #RANGE FOR RX {$6,$7}  0=$6 1=$7                           SLT R6, R4, R3
@@ -126,6 +132,7 @@ def convert_bin_to_asm(input_file, output_file):
             else:
                 c = "4"
             a = "JMPN"
+            output_file.write(      "# PC += " + c + "\n")
             output_file.write(str(a) + " " + str(c) + "\n")
             #FUNCTIONALITY:PC += imm        EXAMPLE OUTPUT: JMPN -13
             #RANGE OF Imm {-13,-10, -7, -4, -3, 2, 3, 4}
@@ -143,6 +150,7 @@ def convert_bin_to_asm(input_file, output_file):
             else:
                 d = "7"
             a = "EQL"
+            output_file.write(      "# If $" + a + " == $" + str(c) + ", R3 == 1 \n")
             output_file.write(str(a) + " " + '$' + str(c) + "," + " " + '$' + str(d)+"\n")
              #FUNCTIONALITY: If RX == RY, R3 = 1    EXAMPLE OF OUTPUT: EQL R1, R7
              #RANGE FOR RX FROM $0-$3
@@ -162,11 +170,12 @@ def convert_bin_to_asm(input_file, output_file):
                  c = "6"
             parity = line[7:8]
             a = "ADD1"
+            output_file.write(      "# $" + c + "++ \n")
             output_file.write(
                 str(a) + " " + "$" + str(c) + "\n")
             #FUNCTIONALITY: RX = RX + 1   EXAMPLE OUTPUT: ADD1 R1
             #RANGE OF RX  {$0,$1,$2,$6)
-        if line[0:4] == '1100':  # STORE instruction
+        if line[0:4] == '1100':  # STR instruction
             op = line[0:4]
             RX = line[4:5]
             imm = line[5:7]
@@ -184,6 +193,7 @@ def convert_bin_to_asm(input_file, output_file):
             else:
                 c = "5"
             a = "STR"
+            output_file.write(      "M[" + c + "] == $" + d + "\n")
             output_file.write(str(a) + " " + "$"+ str(d) + "," +" "+ str(c) + "\n")
             #FUNCTION: M[imm] = RX     EXAMPLE OUTPUT: STR R6,5
             #RANGE OF RX {$0,$6} 0=$0 1=$6
@@ -193,6 +203,7 @@ def convert_bin_to_asm(input_file, output_file):
             op = line[0:7]
             parity = line[7:8]
             a = "SRL_R3"
+            output_file.write("     # R3 = R3 >> 1 \n")
             output_file.write(
                 str(a) + "\n")
             #FUNCTIONALITY: R3 = R3 >> 1   EXAMPLE OF OUTPUT: SRL_R3
@@ -201,6 +212,7 @@ def convert_bin_to_asm(input_file, output_file):
             op = line[0:7]
             parity = line[7:8]
             a = "SLT108"
+            output_file.write("     # If R1 < 180, R2 = 1, Else R2 = 0 \n")
             output_file.write(
                 str(a) + "\n")
             #FUNCTIONALITY: If R1 < 108, R2 = 0    EXAMPLE OF OUTPUT: SLT108
@@ -209,6 +221,7 @@ def convert_bin_to_asm(input_file, output_file):
             op = line[0:7]
             parity = line[7:8]
             a = "CNT0"
+            output_file.write("     # R4 = #0s in R0 \n")
             output_file.write(
                 str(a) + "\n")
              #FUNCTIONALITY: R4 = #0s in R0     EXAMPLE OF OUTPUT: CNT0
@@ -217,6 +230,7 @@ def convert_bin_to_asm(input_file, output_file):
             op = line[0:7]
             parity = line[7:8]
             a = "STR_R4"
+            output_file.write("     # M[R1] = R4 \n")
             output_file.write(
                 str(a) + "\n")
              #FUNCTIONALITY: M[R1] = R4    EXAMPLE OF OUTPUT: STR_R4
@@ -225,6 +239,7 @@ def convert_bin_to_asm(input_file, output_file):
             op = line[0:7]
             parity = line[7:8]
             a = "SRL"
+            output_file.write("     # R5 = R5 >> 1 \n")
             output_file.write(
                 str(a) + "\n")
             #FUNCTIONALITY: R5 = R5 > 1    EXAMPLE OF OUTPUT: SRL
@@ -234,6 +249,7 @@ def convert_bin_to_asm(input_file, output_file):
             op = line[0:7]
             parity = line[7:8]
             a = "LD_R0"
+            output_file.write("     # R0 = M[R1] \n")
             output_file.write(
                 str(a) + "\n")
              #FUNCTIONALITY: R0 = M[R1]   EXAMPLE OF OUTPUT: LD_R0
@@ -242,6 +258,7 @@ def convert_bin_to_asm(input_file, output_file):
             op = line[0:7]
             parity = line[7:8]
             a = "XOR"
+            output_file.write("     # R0 = R6 xor R0\n")
             output_file.write(
                 str(a) + "\n")
             #FUNCTIONALITY: R0 = R6 xor R0   EXAMPLE OF OUTPUT: XOR
@@ -250,32 +267,34 @@ def convert_bin_to_asm(input_file, output_file):
             op = line[0:7]
             parity = line[7:8]
             a = "AND1"
+            output_file.write("     # R3 = R5 & 1\n")
             output_file.write(
                 str(a) + "\n")
             #FUNCTIONALITY: R3 = R5 & 1    EXAMPLE OF OUTPUT: AND1
 
         if line[0:5] == '01011':  #LD instruction
-              op = line[0:5]
-              rx = line[5:6]
-              parity = line[7:8]
-              imm= line[6:7]
-              if line[5:6]== '0':
-                  c="4"
-              else:
-                  c="5"
-              d = int(imm, 2)
+            op = line[0:5]
+            rx = line[5:6]
+            parity = line[7:8]
+            imm= line[6:7]
+            if line[5:6] == '0':
+                c="4"
+            else:
+                c="5"
+            d = int(imm, 2)
               
-              a = "LD"
-
-              output_file.write(
-              str(a) + " "+ "$" + str(c)+ ","+ " "+  str(d) + "\n")
-             #FUNCTIONALITY: R5 = M[i]    EXAMPLE OF OUTPUT: LD R4, 1
-             #RANGE OF RX {$4,$5) 0=$4 1=$5  RANGE OF IMM {0,1}
+            a = "LD"
+            output_file.write(      "# $" + c + " = M[" + str(d) + "]\n")
+            output_file.write(
+            str(a) + " "+ "$" + str(c)+ ","+ " "+ str(d) + "\n")
+            #FUNCTIONALITY: R5 = M[i] EXAMPLE OF OUTPUT: LD R4, 1
+            #RANGE OF RX {$4,$5) 0=$4 1=$5  RANGE OF IMM {0,1}
 
         if line[0:7] == '0000011':  # JR instruction
              op = line[0:7]                                  
              parity = line[7:8]                              
              a = "JR"
+             output_file.write("    # PC = $RA\n")
              output_file.write(                          
                  str(a) + "\n")
 
@@ -303,6 +322,7 @@ def convert_bin_to_asm(input_file, output_file):
             else:
                 d = "7"
             a = "MOV"
+            output_file.write(      "# $" + c + " = $" + d + "\n")
             output_file.write(str(a) + " " + "$"+ str(c) + "," + " " + "$" + str(d) + "\n")
             #FUNCTIONALITY: RX = RY    EXAMPLE OF OUTPUT: MOV R1,R2
             #RANGE FOR RX {$1,$2,$6,$7}  00=$1 01=$2 10=$6 11=$7
@@ -331,6 +351,7 @@ def convert_bin_to_asm(input_file, output_file):
              else:
                   d = "11"
              a = "BEZU"
+             output_file.write(     "# If $" + c + " == 0, PC += " + d + "\n")
              output_file.write(str(a) + " " + "$"+ str(c) + ","+" " + str(d) + "\n")
              #FUNCTIONALITY: If R3 = 0, PC += imm   EXAMPLE OF OUTPUT: BEZU R3, 12
              #RANGE FOR RX {$2,$3,$5,$7}  00=$2 01=$3 10=$5 11=$7
@@ -359,6 +380,7 @@ def convert_bin_to_asm(input_file, output_file):
            else:
                 d = "25"
            a = "BEZ"
+           output_file.write(       "# If $" + c + " == 0, PC += " + d + "\n")
            output_file.write(str(a) + " " + "$"+ str(c) + ","+" " + str(d) + "\n")
            #FUNCTIONALITY: If RX = 0, PC += imm    EXAMPLE OF OUTPUT: BEZ R2, 10
            #RANGE FOR RX {$1,$3,$5,$7} 00=$1 01=$3 10=$5 11=$5
