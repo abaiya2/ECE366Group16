@@ -1,9 +1,14 @@
 # ECE 366 Group 16 
-## ISA Design 
 ### Members: 
 * Arsalan Babar 
 * Amaan Baiyat
+## FLUX ISA
 
+#### Registers:
+ * General Purpose Registers:
+    * $0, $1, $2, $3, $4, $5, $6, $7
+ * Special Registers:
+    * $RA - Used for JAL and JR commands
 
 <table>
   <thead>
