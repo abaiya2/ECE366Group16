@@ -4,6 +4,20 @@
 * Amaan Baiyat
 ## FLUX ISA
 
+### Methodology:
+The methodology behind the FLUX ISA was to optimize for programs 1 and 2. 
+This was done by minimizing the variability for instructions that were not
+used as often as other instructions, or on instructions that were called on the 
+same registers. For example, the AND1, XOR, and SRL instructions are only called
+one time each, so these were made to operate on completely static machine codes,
+so that other instructions that needed variability could achieve that functionality.
+
+Program 1 and Program 2 were modified in MIPS to use a reduced number of registers 
+from Project 1, so that designing this ISA would be more manageable. From there,
+each operation was analyzed to see what registers they worked on, to specify how
+many unique values and registers should be allocated to them. There was alot of 
+iteration that was done, to improve on and optimize the ISA.
+
 #### Registers:
  * General Purpose Registers:
     * $0, $1, $2, $3, $4, $5, $6, $7
