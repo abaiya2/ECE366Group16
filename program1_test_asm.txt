@@ -1,0 +1,56 @@
+### This is a reference File for Program 1, from which the machine code was written
+
+
+ADD1 R0
+STR R0 2
+# Store R0(Value is 1) in M[2] for exponent=0
+
+ADD1 R0			# R0  = 2
+ADD1 R0			# R0 = 3
+ADD1 R0			# R0 = 4
+ADD1 R0			# R0 = 5
+ADD1 R0			# R0 = 6
+MOV R6, R0			# R6 = 6
+LD R5, 0			# R5 = P
+LD R4, 1			# R4 = Q
+
+-------------Loop_1-----------------
+BEZ R5, END(25)
+AND1
+BEZ R3, KEEP_GOING(5)
+MOV R1, R2
+MOV R7, R6
+JAL MULT(9)
+MOV R2, R0
+
+-------------KEEP_GOING---------------
+MOV R1, R6
+MOV R7, R6
+JAL MULT(5)
+MOV R6, R0
+JAL MOD(9)
+SRL
+JMPN LOOP_1(-13)
+-----------MULT------------------------
+CLR R0
+BEZ R1, TO_LAST_ADDRESS(14)
+---------------LOOP-2-----------------
+BEZ R7, TO_LAST_ADDRESS(13)
+ADD_R0
+SUB1
+JMPN LOOP_2(-3)
+----------MOD--------------------
+SLT R6, R4, R3
+BEZU R3, SKIP_JUMP(2)
+JR
+-----------SKIP_JUMP---------------------
+SUB
+JMPN MOD (-4)
+--------------------END--------------
+MOV R6, R2
+JAL MOD(-6)
+STR R6, 2
+JMPN EXIT (2)
+---------TO_LAST_ADDRESS--------------
+JR
+-------------EXIT--------------------

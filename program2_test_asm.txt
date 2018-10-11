@@ -1,78 +1,66 @@
-ADDI R1
-ADDI R1
-ADDI R1
-LD_RO R1
-ADDI R1
-ADDI R1
-ADDI R1
-ADDI R1
-ADDI R1
-
-ADD R6, R0
-LOOP:
-SLT108
-BEZR2, END_LOOP
-
-LD_R0 R1
-XOR
-INNER_LOOP:
-SLT16
-BEZR3, END_INNER_LOOP
-AND1
-SRL
-
-BEZR3, ADD_TO_COUNTER
-JMPN SKIP_COUNTER
-
-ADD_TO_COUNTER:
-ADD1 R2
-
-SKIP_COUNTER:
-ADD1 R4
-JMPN INNER_LOOP
-
-END_INNER_LOOP:
-CLR R3
-STR_R1
-SLT R7, R2, R3
-BEZR3, no_change
-CLR R7
-ADD R7, R2
-
-no_change:
-ADD1 R1
-JMPN LOOP
-END_LOOP:
+### This is a reference File for Program 2, from which the machine code was written
 
 
-CLR R0
-
-STR 4
-CLR R1
-ADDI R1
-ADDI R1
-ADDI R1
-ADDI R1
-ADDI R1
-ADDI R1
-ADDI R1
-ADDI R1
-
-CLR R6
-COUNT_LOOP
-SLT108
-BEZR2, END_COUNT_LOOP
-
-LD_RO R1
-EQL R0, R7
-BEZR3, not_equal
-ADDI R6
-not_equal:
 
 ADD1 R1
-JMPN COUNT_LOOP
-END_COUNT_LOOP:
+ADD1 R1
+ADD1 R1 	#R1 = 3
 
-CLR R0
-ADD R0, R6
-STR 5
+LD_RO  	#R0 = M[3]
+
+ADD1 R1	#R1 = 4
+ADD1 R1	#R1 = 5
+ADD1 R1
+ADD1 R1
+ADD1 R1	#R1 = 8
+
+MOV R6, R0	#R6 = R0, which is the target value
+
+
+--------------LOOP------------------
+SLT108
+BEZU R2, END_LOOP(10)
+
+LD_R0		# Load current memory address value
+XOR 		#R0 is equal to R6 xor R0
+CNT0		#Count the number of 0s bits in R0 into R4
+STR_R4 	#Store the value of R4 in M[R1], the current mem address
+
+SLT R7, R2, R3 	#R7 is max value IIf R7< R2, R3 = 1
+
+BEZU R3, no_change(2)	#If R3 is 0, R7 >= R2, so no change in R7 is needed
+MOV R7, R2		#Set R7 to be R2, the new high value
+-----------no_change--------------:
+
+ADD1 R1		#Increase loop counter
+JMPN LOOP(-10)	#Jump to continue loop
+---------------END_LOOP----------
+
+
+MOV R6, R7		#Set R6 to be the highest matching score
+STR R6 ,4		#Store Highest matching score in M[4]
+
+CLR R1			#R1 = 0
+ADD1 R1 		#R1 = 1
+ADD1 R1 		#2
+ADD1 R1 		#3
+ADD1 R1 		#4
+ADD1 R1 		#5
+ADD1 R1 		#6
+ADD1 R1 		#7
+ADD1 R1 		#8
+
+CLR R6			#R6 = 0
+-----------COUNT_LOOP----------------
+SLT108
+BEZU R2, END_COUNT_LOOP(7)
+
+LD_RO		# R0 = M[R1], the current address
+EQL R0, R7	# If R0, the current score, matches the highest score, set R3 to 1
+BEZU R3, not_equal(2)	# If R3 = 0, it means R0 and R7 are not equal, skip counter
+ADD1 R6	# Add to count of how many numbers match high score
+---------------not_equal---------------------
+ADD1 R1 		# Increment Loop Counter
+JMPN COUNT_LOOP(-7)
+----------END_COUNT_LOOP----------
+STR R6 5
